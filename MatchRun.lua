@@ -86,8 +86,6 @@ function M.match_loop(context, dispatcher, tick, state, messages)
 
 
     for _,msg in ipairs(messages) do
-        print(msg.data)
-        print(type(msg.data))
       dispatch.dispatchGameMessage(dispatcher,3,msg.data,nil,nil)
     end
 

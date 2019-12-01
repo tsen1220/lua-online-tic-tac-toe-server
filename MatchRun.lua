@@ -86,7 +86,8 @@ function M.match_loop(context, dispatcher, tick, state, messages)
 
 
     for _,msg in ipairs(messages) do
-      dispatch.dispatchGameMessage(dispatcher,3,msg.data,nil,nil)
+      local encode_data = nakama.json_encode(msg)
+      dispatch.dispatchGameMessage(dispatcher,3,encode_data,nil,nil)
     end
 
 

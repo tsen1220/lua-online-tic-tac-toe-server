@@ -15,7 +15,7 @@ local M ={}
 
 
 function M.dispatchGameMessage ( dispatcher, opCode , data , presences ,sender )
-    dispatcher.broadcast_message(opCode,encodeData,presences,sender)
+    dispatcher.broadcast_message(opCode,data,presences,sender)
 end
 
 

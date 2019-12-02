@@ -2,6 +2,8 @@
 
 This is lua runtime for nakama game server.
 
+These lua file is in the nakama  ./data/modules.
+
 TicTacToe Unity Client : https://github.com/tsen1220/UnityOnlineTicTacToeClient
 
 We need to export the lua modules to let nakama server run the specific match handler API.
@@ -84,38 +86,7 @@ Then , use the nakama match handler API to ensure the online game smoothly.
 
 Nakama match handler API:
 
-M.match_init( context , setupState )
 
-```
-
-function M.match_init( context , setupState )
-
-
-    --[[
-        When you succeed to create the match. Then you will initiate the match. 
-
-
-        You must return three values.
-        
-        (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match. This variable comes from setupState of match_create. 
-        *:Otherwise, it is used to declare state variable for match handler API.
-        
-        (number) - Tick rate representing the desired number of match_loop() calls per second. Must be between 1 and 30, inclusive. 
-        *:Otherwise, it is used to declare tick variable for match handler API.
-        
-        (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in match listing to filter matches.
-    ]]
-
-
-    local gamestate = setupState
-    local tickrate = 2
-    local label = "TicTacToe"
-
-    return gamestate, tickrate, label
-
-end
-
-```
 
 
 M.match_init( context , setupState )

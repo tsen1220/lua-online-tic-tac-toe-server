@@ -2,6 +2,8 @@
 
 This is lua runtime for nakama game server.
 
+TicTacToe Unity Client :
+
 We need to export the lua modules to let nakama server run the specific match handler API.
 
 First, we need to set the nakama module to use the nakama features and table M to export the module by returning M.
@@ -236,14 +238,6 @@ We need to use it to complete the online game.
 
 ```
 dispatcher.broadcast_message(  op_code ,   data    ,   presences   ,   sender  ):
-
-    |Param    |	Type	|                                                   Description                                                                                                     |
-    |---------|---------|----------------------------------------------------------------------------------------------------------------|
-    |op_code  |	number	|Numeric message op code.                                                                                        |
-    |data     |	string	|Data payload string, or nil.                                                                                    |
-    |presences|	table	|List of presences (a subset of match participants) to use as message targets, or nil to send to the whole match.|
-    |sender   |	table	|A presence to tag on the message as the 'sender', or nil.                                                       |
-]]
     |Param    |	Type	|                                                   Description                                                  |
     |---------|---------|----------------------------------------------------------------------------------------------------------------|
     |op_code  |	number	|Numeric message op code.                                                                                        |

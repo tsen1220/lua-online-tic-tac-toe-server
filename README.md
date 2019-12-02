@@ -35,8 +35,6 @@ And players can join the match by matchID.
 ```
 local function CreateMatchID( context , match_user ) 
   
--- Function
------------------------------------------------------------------------
 --[[
   match_user data cotains the match info.
   setupState table uses for create the match.
@@ -47,7 +45,6 @@ local function CreateMatchID( context , match_user )
   }
 
 
------------------------------------------------------------------------
 --[[
 
   The matchmaker matched hook must return a match ID or nil.

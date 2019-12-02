@@ -2,7 +2,7 @@
 
 This is lua runtime for nakama game server.
 
-TicTacToe Unity Client :
+TicTacToe Unity Client : https://github.com/tsen1220/UnityOnlineTicTacToeClient
 
 We need to export the lua modules to let nakama server run the specific match handler API.
 
@@ -75,6 +75,7 @@ end
 
 nakama.register_matchmaker_matched(CreateMatchID)
 
+
 ```
 
 
@@ -95,8 +96,13 @@ function M.match_init( context , setupState )
 
 
         You must return three values.
-        (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match. This variable comes from setupState of match_create .
-        (number) - Tick rate representing the desired number of match_loop() calls per second. Must be between 1 and 30, inclusive.
+        
+        (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match. This variable comes from setupState of match_create. 
+        *:Otherwise, it is used to declare state variable for match handler API.
+        
+        (number) - Tick rate representing the desired number of match_loop() calls per second. Must be between 1 and 30, inclusive. 
+        *:Otherwise, it is used to declare tick variable for match handler API.
+        
         (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in match listing to filter matches.
     ]]
 
@@ -124,8 +130,11 @@ function M.match_init( context , setupState )
 
 
         You must return three values.
+        
         (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match. This variable comes from setupState of match_create .
+        
         (number) - Tick rate representing the desired number of match_loop() calls per second. Must be between 1 and 30, inclusive.
+        
         (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in match listing to filter matches.
     ]]
 
@@ -150,13 +159,17 @@ function M.match_join_attempt( context , dispatcher, tick, state, presence, meta
     After initiating , check the user join attempt.
 
     We need to return 2 values , 1 is optional.
+    
     (table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
+    
     (boolean) - True if the join attempt should be allowed, false otherwise.
+    
     (string) *optionally - If the join attempt should be rejected, an optional string rejection reason can be returned to the client.
 ]]
 
 
---[[
+--[[ which comes from nakama server
+
  Presence format(     Presence data format    ):
   {
     user_id = "user unique ID",
@@ -164,6 +177,7 @@ function M.match_join_attempt( context , dispatcher, tick, state, presence, meta
     username = "user's unique username",
     node = "name of the Nakama node the user is connected to"
   }
+
 ]]
 
 
@@ -215,14 +229,9 @@ function M.match_loop(context, dispatcher, tick, state, messages)
 
     --[[
         This is the server runtime during the match.
+        Messages is the data which comes from the client.
         return nil  ===========> You will go to the match_leave function. 
    ]] 
-
-
-    for _,msg in ipairs(messages) do
-      dispatch.dispatchGameMessage(dispatcher,op_code,msg.data,nil,nil)
-    end
-
 
 
     return state
@@ -238,6 +247,8 @@ We need to use it to complete the online game.
 
 ```
 dispatcher.broadcast_message(  op_code ,   data    ,   presences   ,   sender  ):
+
+
     |Param    |	Type	|                                                   Description                                                  |
     |---------|---------|----------------------------------------------------------------------------------------------------------------|
     |op_code  |	number	|Numeric message op code.                                                                                        |

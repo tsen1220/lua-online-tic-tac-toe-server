@@ -53,7 +53,7 @@ function M.match_join_attempt( context , dispatcher, tick, state, presence, meta
 end
 
 function M.match_join(context, dispatcher, tick, state, presences)
-
+  print(presences)
     --[[
         Join the room.
 
@@ -81,13 +81,13 @@ end
 function M.match_loop(context, dispatcher, tick, state, messages)
 
     --[[
-        return nil  ===========> You will go to match leave. 
+        This is the server runtime during the match.
+        return nil  ===========> You will go to the match_leave function. 
    ]] 
 
 
     for _,msg in ipairs(messages) do
-      local encode_data = nakama.json_encode(msg)
-      dispatch.dispatchGameMessage(dispatcher,3,encode_data,nil,nil)
+      dispatch.dispatchGameMessage(dispatcher,3,msg.data,nil,nil)
     end
 
 

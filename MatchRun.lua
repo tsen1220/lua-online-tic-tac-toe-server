@@ -17,7 +17,7 @@ function M.match_init( context , setupState )
         (number) - Tick rate representing the desired number of match_loop() calls per second. Must be between 1 and 30, inclusive.
         (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in match listing to filter matches.
     ]]
-    local gamestate = setupState
+    local gamestate = { setupState , setupState.invited[1].presence , setupState.invited[2].presence}
     local tickrate = 2
     local label = "TicTacToe"
 
@@ -48,18 +48,21 @@ function M.match_join_attempt( context , dispatcher, tick, state, presence, meta
 ]]
 
 
+
     return state , true
 
 end
 
 function M.match_join(context, dispatcher, tick, state, presences)
-  print(presences)
     --[[
         Join the room.
 
         We need to return 1 value.
         (table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
     ]]    
+
+
+
   return state
 
 end
@@ -85,10 +88,24 @@ function M.match_loop(context, dispatcher, tick, state, messages)
         return nil  ===========> You will go to the match_leave function. 
    ]] 
 
-
+    
     for _,msg in ipairs(messages) do
-      dispatch.dispatchGameMessage(dispatcher,3,msg.data,nil,nil)
+      if (msg.op_code == 1 or msg.op_code == 2)  then
+      dispatch.dispatchGameMessage(dispatcher,3,msg.data,{state.invited[2].presence},nil)
+      end
+
+      if(msg.op_code ==4) then
+        local gameControl ={
+          ["control"] = false;
+        }
+        local encode_data = nakama.json_encode(gameControl)
+        
+        dispatch.dispatchGameMessage(dispatcher,5,encode_data,{state.invited[1].presence},nil)
+    
+        end
     end
+
+  
 
 
 

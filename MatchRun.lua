@@ -1,6 +1,8 @@
 local nakama = require("nakama")
 local dispatch = require("Dispatcher")
 
+local TurnControl = 1
+
 print("Nakama Run")
 
 -------------------------------------------------------------------
@@ -13,11 +15,11 @@ function M.match_init( context , setupState )
 
 
         You must return three values.
-        (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match. This variable comes from setupState of match_create 
+        (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match. This variable comes from setupState of match_create. Contains match and user's info.
         (number) - Tick rate representing the desired number of match_loop() calls per second. Must be between 1 and 30, inclusive.
         (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in match listing to filter matches.
     ]]
-    local gamestate = { setupState , setupState.invited[1].presence , setupState.invited[2].presence}
+    local gamestate = {  setupState.invited[1].presence , setupState.invited[2].presence}
     local tickrate = 2
     local label = "TicTacToe"
 
@@ -88,19 +90,38 @@ function M.match_loop(context, dispatcher, tick, state, messages)
         return nil  ===========> You will go to the match_leave function. 
    ]] 
 
-    
+   --when receiving messages
     for _,msg in ipairs(messages) do
+      
+
+
       if (msg.op_code == 1 or msg.op_code == 2)  then
-      dispatch.dispatchGameMessage(dispatcher,3,msg.data,{state.invited[2].presence},nil)
+
+
+     
+  
+      dispatch.dispatchGameMessage(dispatcher,3,msg.data,{state[TurnControl]},nil)
+
+      TurnControl =TurnControl+1
+        if(TurnControl ==3) then
+          TurnControl=1
+        end
       end
 
       if(msg.op_code ==4) then
+
+    
+
         local gameControl ={
           ["control"] = false;
         }
         local encode_data = nakama.json_encode(gameControl)
+
+        nakama.logger_info(nakama.json_encode(state[TurnControl]))
         
-        dispatch.dispatchGameMessage(dispatcher,5,encode_data,{state.invited[1].presence},nil)
+       dispatch.dispatchGameMessage(dispatcher,5,encode_data,{state[TurnControl]},nil)
+        
+       TurnControl =TurnControl+1
     
         end
     end

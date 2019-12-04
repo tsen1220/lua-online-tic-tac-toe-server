@@ -1,7 +1,7 @@
 local nakama = require("nakama")
 local dispatch = require("Dispatcher")
 
-local TurnControl = 1
+
 
 print("Nakama Run")
 
@@ -19,7 +19,9 @@ function M.match_init( context , setupState )
         (number) - Tick rate representing the desired number of match_loop() calls per second. Must be between 1 and 30, inclusive.
         (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in match listing to filter matches.
     ]]
-    local gamestate = {  setupState.invited[1].presence , setupState.invited[2].presence}
+
+    local TurnControl =2
+    local gamestate = {  setupState.invited[1].presence , setupState.invited[2].presence,TurnControl}
     local tickrate = 2
     local label = "TicTacToe"
 
@@ -84,7 +86,6 @@ function M.match_leave(context, dispatcher, tick, state, presences)
 end
 
 function M.match_loop(context, dispatcher, tick, state, messages)
-
     --[[
         This is the server runtime during the match.
         return nil  ===========> You will go to the match_leave function. 
@@ -95,40 +96,35 @@ function M.match_loop(context, dispatcher, tick, state, messages)
       
 
 
-      if (msg.op_code == 1 or msg.op_code == 2)  then
-
-
-     
+      if (msg.op_code == 1 or msg.op_code == 2)  then 
   
-      dispatch.dispatchGameMessage(dispatcher,3,msg.data,{state[TurnControl]},nil)
+      dispatch.dispatchGameMessage(dispatcher,3,msg.data,{state[state[3]]},nil)
+     
+        nakama.logger_info(nakama.json_encode(state))
 
-      TurnControl =TurnControl+1
-        if(TurnControl ==3) then
-          TurnControl=1
+        state[3] = state[3]+1
+        if(state[3] ==3) then
+          state[3] = 1
         end
       end
 
       if(msg.op_code ==4) then
-
-    
-
         local gameControl ={
           ["control"] = false;
         }
-        local encode_data = nakama.json_encode(gameControl)
 
-        nakama.logger_info(nakama.json_encode(state[TurnControl]))
+        local encode_data = nakama.json_encode(gameControl)
         
-       dispatch.dispatchGameMessage(dispatcher,5,encode_data,{state[TurnControl]},nil)
+       dispatch.dispatchGameMessage(dispatcher,5,encode_data,{state[1]},nil)
         
-       TurnControl =TurnControl+1
+        
     
         end
+
+        if(msg.op_code ==8) then 
+          return nil
+        end
     end
-
-  
-
-
 
     return state
 

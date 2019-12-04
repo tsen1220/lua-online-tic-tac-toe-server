@@ -116,12 +116,11 @@ function M.match_loop(context, dispatcher, tick, state, messages)
         local encode_data = nakama.json_encode(gameControl)
         
        dispatch.dispatchGameMessage(dispatcher,5,encode_data,{state[1]},nil)
-        
-        
-    
+
         end
 
         if(msg.op_code ==8) then 
+          nakama.logger_info(msg.data)
           return nil
         end
     end

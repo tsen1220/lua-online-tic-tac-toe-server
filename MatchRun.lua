@@ -120,9 +120,19 @@ function M.match_loop(context, dispatcher, tick, state, messages)
         end
 
         if(msg.op_code ==8) then 
-          nakama.logger_info(msg.data)
+
+          dispatch.dispatchGameMessage(dispatcher,10,"O Win",nil,nil)
+
           return nil
         end
+
+        if(msg.op_code ==9) then 
+
+          dispatch.dispatchGameMessage(dispatcher,10,"X Win",nil,nil)
+
+          return nil
+        end
+
     end
 
     return state

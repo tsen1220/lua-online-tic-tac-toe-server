@@ -201,7 +201,7 @@ function M.match_loop(context, dispatcher, tick, state, messages)
     --[[
         This is the server runtime during the match.
         Messages is the data which comes from the client.
-        return nil  ===========> You will go to the match_leave function. 
+        return nil  ===========> stop the match loop.
    ]] 
 
    for _,msg in ipairs(messages) do 
@@ -230,8 +230,7 @@ M.match_leave(context, dispatcher, tick, state, presences)
 function M.match_leave(context, dispatcher, tick, state, presences)
 
   --[[
-      When match_loop return nil. 
-      Runtime Code will enter this .
+    When someone leave the match, execute this.
     
       We need to return 1 value.
       (table) - An (optionally) updated state. May be any non-nil Lua term or nil to end the match.

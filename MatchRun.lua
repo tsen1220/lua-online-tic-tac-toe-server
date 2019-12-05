@@ -74,9 +74,9 @@ end
 function M.match_leave(context, dispatcher, tick, state, presences)
 
   --[[
-      When match_loop return nil. 
-      Runtime Code will enter this .
-    
+
+   When someone leave the match, execute this.
+
       We need to return 1 value.
       (table) - An (optionally) updated state. May be any non-nil Lua term or nil to end the match.
   ]]  
@@ -88,7 +88,7 @@ end
 function M.match_loop(context, dispatcher, tick, state, messages)
     --[[
         This is the server runtime during the match.
-        return nil  ===========> You will go to the match_leave function. 
+        return nil  ===========> stop the match loop.
    ]] 
 
    --when receiving messages
@@ -123,14 +123,12 @@ function M.match_loop(context, dispatcher, tick, state, messages)
 
           dispatch.dispatchGameMessage(dispatcher,10,"O Win",nil,nil)
 
-          return nil
         end
 
         if(msg.op_code ==9) then 
 
           dispatch.dispatchGameMessage(dispatcher,10,"X Win",nil,nil)
-
-          return nil
+       
         end
 
     end

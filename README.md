@@ -230,7 +230,7 @@ M.match_leave(context, dispatcher, tick, state, presences)
 function M.match_leave(context, dispatcher, tick, state, presences)
 
   --[[
-    When someone leave the match, execute this.
+    When someone leave the match, exit match_loop function and execute match_leave.
     
       We need to return 1 value.
       (table) - An (optionally) updated state. May be any non-nil Lua term or nil to end the match.

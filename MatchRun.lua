@@ -1,10 +1,6 @@
 local nakama = require("nakama")
 local dispatch = require("Dispatcher")
 
-
-
-print("Nakama Run")
-
 -------------------------------------------------------------------
 local  M = {}
 
@@ -81,7 +77,6 @@ function M.match_leave(context, dispatcher, tick, state, presences)
       (table) - An (optionally) updated state. May be any non-nil Lua term or nil to end the match.
   ]]  
 
-  print("Leave the match!")
   return state
 end
 

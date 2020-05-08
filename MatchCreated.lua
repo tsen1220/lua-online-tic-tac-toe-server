@@ -1,6 +1,6 @@
 local nakama = require("nakama")
 
-local function CreateMatchID( context , match_user ) 
+local function CreateMatchID(context, match_user) 
   
 -- Function
 -----------------------------------------------------------------------
@@ -30,7 +30,7 @@ local function CreateMatchID( context , match_user )
   local module = "MatchRun"
   local matchID;
 
-  matchID = nakama.match_create(module,setupState)
+  matchID = nakama.match_create(module, setupState)
 
   return matchID;
 end

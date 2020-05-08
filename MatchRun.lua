@@ -98,12 +98,12 @@ function M.match_loop(context, dispatcher, tick, state, messages)
         nakama.logger_info(nakama.json_encode(state))
 
         state[3] = state[3]+1
-        if(state[3] ==3) then
+        if(state[3] == 3) then
           state[3] = 1
         end
       end
 
-      if(msg.op_code ==4) then
+      if(msg.op_code == 4) then
         local gameControl ={
           ["control"] = false;
         }
@@ -114,13 +114,13 @@ function M.match_loop(context, dispatcher, tick, state, messages)
 
         end
 
-        if(msg.op_code ==8) then 
+        if(msg.op_code == 8) then 
 
           dispatch.dispatchGameMessage(dispatcher, 10, "O Win", nil, nil)
 
         end
 
-        if(msg.op_code ==9) then 
+        if(msg.op_code == 9) then 
 
           dispatch.dispatchGameMessage(dispatcher, 10, "X Win", nil, nil)
        

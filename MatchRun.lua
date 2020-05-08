@@ -5,7 +5,7 @@ local dispatch = require("Dispatcher")
 local  M = {}
 
 
-function M.match_init( context , setupState )
+function M.match_init(context, setupState)
     --[[
         When you succeed to create the match. Then you will initiate the match. 
 
@@ -17,7 +17,7 @@ function M.match_init( context , setupState )
     ]]
 
     local TurnControl =2
-    local gamestate = {  setupState.invited[1].presence , setupState.invited[2].presence,TurnControl}
+    local gamestate = {  setupState.invited[1].presence, setupState.invited[2].presence, TurnControl}
     local tickrate = 2
     local label = "TicTacToe"
 
@@ -25,7 +25,7 @@ function M.match_init( context , setupState )
 
 end
 
-function M.match_join_attempt( context , dispatcher, tick, state, presence, metadata )
+function M.match_join_attempt(context, dispatcher, tick, state, presence, metadata)
 --[[
 
     After initiating , check the user join attempt.
@@ -49,7 +49,7 @@ function M.match_join_attempt( context , dispatcher, tick, state, presence, meta
 
 
 
-    return state , true
+    return state, true
 
 end
 
@@ -93,7 +93,7 @@ function M.match_loop(context, dispatcher, tick, state, messages)
 
       if (msg.op_code == 1 or msg.op_code == 2)  then 
   
-      dispatch.dispatchGameMessage(dispatcher,3,msg.data,{state[state[3]]},nil)
+      dispatch.dispatchGameMessage(dispatcher, 3, msg.data, {state[state[3]]}, nil)
      
         nakama.logger_info(nakama.json_encode(state))
 
@@ -110,19 +110,19 @@ function M.match_loop(context, dispatcher, tick, state, messages)
 
         local encode_data = nakama.json_encode(gameControl)
         
-       dispatch.dispatchGameMessage(dispatcher,5,encode_data,{state[1]},nil)
+       dispatch.dispatchGameMessage(dispatcher, 5, encode_data, {state[1]}, nil)
 
         end
 
         if(msg.op_code ==8) then 
 
-          dispatch.dispatchGameMessage(dispatcher,10,"O Win",nil,nil)
+          dispatch.dispatchGameMessage(dispatcher, 10, "O Win", nil, nil)
 
         end
 
         if(msg.op_code ==9) then 
 
-          dispatch.dispatchGameMessage(dispatcher,10,"X Win",nil,nil)
+          dispatch.dispatchGameMessage(dispatcher, 10, "X Win", nil, nil)
        
         end
 

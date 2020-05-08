@@ -50,7 +50,7 @@ If nakama matchmaker matched, it would create the match room with matchID and se
 And players can join the match by matchID.
 
 ```
-local function CreateMatchID( context , match_user ) 
+local function CreateMatchID(context, match_user) 
   
 --[[
   match_user data cotains the match info.
@@ -79,7 +79,7 @@ local function CreateMatchID( context , match_user )
 
 ---------------- Create the match with module and setupState.
 
-  matchID = nakama.match_create(module,setupState)
+  matchID = nakama.match_create(module, setupState)
 
   return matchID;
 end
@@ -101,11 +101,11 @@ We need to use Nakama match handler API.
 
 ### Match_Init
 
-M.match_init( context , setupState )
+M.match_init(context, setupState)
 
 ```
 
-function M.match_init( context , setupState )
+function M.match_init(context, setupState)
 
     --[[
         When you succeed to create the match. Then you will initiate the match. 
@@ -121,7 +121,7 @@ function M.match_init( context , setupState )
     ]]
 
 
-    local gamestate = setupState      or      { setupState, setupState.invited[1].presence , setupState.invited[2].presence }
+    local gamestate = setupState      or      { setupState, setupState.invited[1].presence, setupState.invited[2].presence }
     local tickrate = 2
     local label = "TicTacToe"
 
@@ -133,10 +133,10 @@ end
 
 ### Match_Join_Attempt
 
-M.match_join_attempt( context , dispatcher, tick, state, presence, metadata)
+M.match_join_attempt(context, dispatcher, tick, state, presence, metadata)
 
 ```
-function M.match_join_attempt( context , dispatcher, tick, state, presence, metadata )
+function M.match_join_attempt(context, dispatcher, tick, state, presence, metadata)
 
       --[[
           After initiating , check the user join attempt.
@@ -172,7 +172,7 @@ end
 
 ### Match_Join
 
-M.match_join( context, dispatcher, tick, state, presences )
+M.match_join(context, dispatcher, tick, state, presences)
 
 ```
 function M.match_join(context, dispatcher, tick, state, presences)
@@ -212,7 +212,7 @@ function M.match_loop(context, dispatcher, tick, state, messages)
     --[[
       This section want to send data to the client. To keep match working.
     ]]
-      dispatcher.broadcast_message(  op_code ,   data    ,   presences   ,   sender  )
+      dispatcher.broadcast_message(op_code, data, presences, sender)
 
    end
 
@@ -252,7 +252,7 @@ We need to use it to complete the online game.
 
 
 ```
-dispatcher.broadcast_message(  op_code ,   data    ,   presences   ,   sender  ):
+dispatcher.broadcast_message(op_code, data, presences, sender):
 
 1. op_code is number.
 2. data is json_encode data.
@@ -260,7 +260,7 @@ dispatcher.broadcast_message(  op_code ,   data    ,   presences   ,   sender  )
 4. sender is table which contains presence(s) data.
 
 
-For example, function is in match_loop ===========> dispatcher.broadcast_message( 1, Nakama.json_encode(data),{ state.presences[1] },{ state.presences[2] } )
+For example, function is in match_loop ===========> dispatcher.broadcast_message(1, Nakama.json_encode(data), { state.presences[1] }, { state.presences[2] })
 
         Presence format:
         presence  {

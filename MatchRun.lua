@@ -4,7 +4,6 @@ local dispatch = require("Dispatcher")
 -------------------------------------------------------------------
 local  M = {}
 
-
 function M.match_init(context, setupState)
     --[[
         When you succeed to create the match. Then you will initiate the match. 
@@ -98,27 +97,19 @@ function M.match_loop(context, dispatcher, tick, state, messages)
       local gameControl ={
         ["control"] = false;
       }
-
-      local encode_data = nakama.json_encode(gameControl)
       
-    dispatch.dispatchGameMessage(dispatcher, 5, encode_data, {state[1]}, nil)
-
+      local encode_data = nakama.json_encode(gameControl)
+      dispatch.dispatchGameMessage(dispatcher, 5, encode_data, {state[1]}, nil)
     end
 
     if(msg.op_code == 8) then 
-
       dispatch.dispatchGameMessage(dispatcher, 10, "O Win", nil, nil)
-
     end
 
     if(msg.op_code == 9) then 
-
       dispatch.dispatchGameMessage(dispatcher, 10, "X Win", nil, nil)
-    
     end
-
   end
-
   return state
 
 end

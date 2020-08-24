@@ -12,7 +12,6 @@ local function CreateMatchID(context, match_user)
     invited = match_user
   }
 
-
 -----------------------------------------------------------------------
 --[[
 
@@ -34,7 +33,5 @@ local function CreateMatchID(context, match_user)
 
   return matchID;
 end
-
-
 
 nakama.register_matchmaker_matched(CreateMatchID)

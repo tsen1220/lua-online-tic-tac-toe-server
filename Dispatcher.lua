@@ -13,12 +13,8 @@ local M ={}
     |sender   |	table	|A presence to tag on the message as the 'sender', or nil.                                                       |
 ]]
 
-
-
 function M.dispatchGameMessage (dispatcher, opCode, data, presences, sender)
   dispatcher.broadcast_message(opCode, data, presences, sender)
 end
-
-
 
 return M
